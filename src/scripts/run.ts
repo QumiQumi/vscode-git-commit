@@ -1,7 +1,7 @@
 import { Repository } from '../typings/git';
 import { IQuickPickSettings } from '../typings/quickPick';
 import { useQuickPick, useQuickText } from '../utils/actions';
-import { setGitMessage } from '../utils/git';
+import { getCurrentTicket, setGitMessage } from '../utils/git';
 import {
   getDefaultVariablesValues,
   getTemplate,
@@ -35,7 +35,10 @@ export const execute = async (repo: Repository) => {
       key: v,
       value: '',
     };
-    if (!variableValue) {
+    if (variableValue === 'branch-ticket') {
+      result.value = getCurrentTicket(repo).label ?? '';
+      variablesReplacement.push(result);
+    } else if (!variableValue) {
       const defaultValuesSettings = getDefaultVariablesValues();
       const defaultValue: string | undefined = defaultValuesSettings[v];
 

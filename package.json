@@ -1,12 +1,12 @@
 {
-  "name": "vscode-git-commit",
-  "displayName": "VSCode Git Commit Message",
+  "name": "vscode-git-commit-modified",
+  "displayName": "VSCode Git Commit Message modified",
   "description": "Harmonize your git commit message with your colleagues",
   "version": "3.2.0",
   "engines": {
     "vscode": "^1.60.0"
   },
-  "publisher": "rioukkevin",
+  "publisher": "QumiQumi",
   "license": "MIT",
   "homepage": "https://gcm-config.netlify.app",
   "bugs": {

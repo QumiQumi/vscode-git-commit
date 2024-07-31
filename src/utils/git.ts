@@ -1,4 +1,4 @@
-import { window, extensions, Uri } from 'vscode';
+import { extensions, Uri, window } from 'vscode';
 import { GitExtension, Repository } from '../typings/git';
 import { IQuickPickSettings } from '../typings/quickPick';
 import { getMode } from './settings';
@@ -40,7 +40,12 @@ export const setGitMessage = (repo: Repository, msg: string): void => {
 export const getCurrentBranch = (repo: Repository): IQuickPickSettings[] => {
   const branch = repo.state.HEAD?.upstream?.name;
   const repository = repo.rootUri.path.split('/').pop();
+  const ticket = branch ? branch.match(/[A-Z]+-\d+/) : null;
   return [
+    {
+      label: ticket ? ticket[0] : 'No ticket found',
+      detail: '',
+    },
     {
       label: branch ?? 'Branch not found',
       detail: '',
@@ -53,6 +58,9 @@ export const getCurrentBranch = (repo: Repository): IQuickPickSettings[] => {
       detail: '',
     },
   ];
+};
+export const getCurrentTicket = (repo: Repository): IQuickPickSettings => {
+  return getCurrentBranch(repo)[0];
 };
 
 /**
@@ -71,7 +79,7 @@ export function getRepoContainingFile(fileUri: Uri, repos: Repository[]) {
       (repo === null ||
         repo.rootUri.toString().length < repoUris[i].toString().length)
     )
-      repo = repos[i];
+      {repo = repos[i];}
   }
   return repo || false;
 }
